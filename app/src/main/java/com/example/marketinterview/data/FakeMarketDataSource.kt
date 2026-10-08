@@ -13,10 +13,12 @@ class FakeMarketDataSource(
     private val dropAfter: Int = 20
 ) : MarketDataSource {
 
+    private val tickers = listOf("AAPL", "MSFT", "TSLA", "VOD", "BARC", "SAP")
+
     var connectionCount = 0
         private set
 
-    override fun connect(tickers: Set<String>): Flow<PriceUpdate> = flow {
+    override fun connect(): Flow<PriceUpdate> = flow {
         connectionCount++
         var emitted = 0
         while (true) {

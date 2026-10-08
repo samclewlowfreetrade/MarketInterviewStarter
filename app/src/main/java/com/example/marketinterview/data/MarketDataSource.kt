@@ -4,8 +4,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface MarketDataSource {
     /**
-     * Opens a connection and emits updates for the given tickers.
+     * Opens a connection and emits updates for all instruments in the market.
      * Throws IOException when the connection drops.
      */
-    fun connect(tickers: Set<String>): Flow<PriceUpdate>
+    fun connect(): Flow<PriceUpdate>
 }

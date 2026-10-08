@@ -11,17 +11,17 @@ import java.io.IOException
 class FakeMarketDataSourceTest {
 
     @Test
-    fun `emits one update per ticker per tick`() = runTest {
+    fun `emits one update per instrument per tick`() = runTest {
         val source = FakeMarketDataSource()
 
-        val updates = source.connect(setOf("AAPL", "MSFT")).take(4).toList()
+        val updates = source.connect().take(6).toList()
 
-        assertEquals(listOf("AAPL", "MSFT", "AAPL", "MSFT"), updates.map { it.ticker })
+        assertEquals(listOf("AAPL", "MSFT", "TSLA", "VOD", "BARC", "SAP"), updates.map { it.ticker })
         assertEquals(1, source.connectionCount)
     }
 
     @Test(expected = IOException::class)
     fun `throws when the connection drops`() = runTest {
-        FakeMarketDataSource(dropAfter = 2).connect(setOf("AAPL")).toList()
+        FakeMarketDataSource(dropAfter = 2).connect().toList()
     }
 }

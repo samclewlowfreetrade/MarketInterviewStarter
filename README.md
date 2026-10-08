@@ -2,9 +2,9 @@
 
 ## Brief
 
-> Our watchlist needs a repository that provides live prices to multiple screens. Build a `WatchlistRepository` that:
+> Our watchlist needs a repository that provides live prices to multiple screens. The market data source streams updates for every instrument in the market over a single connection. Build a `WatchlistRepository` that:
 >
-> 1. Lets multiple consumers observe prices for a set of tickers.
+> 1. Lets multiple consumers observe prices for the tickers they care about.
 > 2. Uses a single upstream connection to the market data source, regardless of the number of consumers.
 > 3. Caches the last known price, so a new consumer receives a value immediately.
 > 4. Reconnects automatically when the source drops, with backoff.
@@ -21,7 +21,7 @@ All in `app/src/main/java/com/example/marketinterview/data/`:
 | --- | --- |
 | `PriceUpdate.kt` | The price update data class |
 | `MarketDataSource.kt` | The upstream source interface |
-| `FakeMarketDataSource.kt` | Fake source that ticks every 250ms and throws `IOException` after `dropAfter` ticks; exposes `connectionCount` |
+| `FakeMarketDataSource.kt` | Fake source that streams six tickers (AAPL, MSFT, TSLA, VOD, BARC, SAP) every 250ms and throws `IOException` after `dropAfter` ticks; exposes `connectionCount` |
 
 `kotlinx-coroutines-test`, Turbine and JUnit 4 are already on the unit test classpath.
 
